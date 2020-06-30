@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>LabTask</title>
+        <meta charset="UTF-8">
+        <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
+        <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+    </head>
+    <body>
+        <br>
+        <canvas id="ch"></canvas>
+        
+        <script type="text/javascript">
+            var ctx = document.getElementById("ch").getContext("2d");
+            var graph_labels = {{graph_label|tojson}};
+            var tfidf_values = {{tfidf_value|tojson}};
+            var sentiment_values = {{sentiment_value|tojson}};
+            var color = Chart.helpers.color;
+            var chart = new Chart(ctx, {
+            type: "bar",
+            data:{
+                labels:graph_labels,
+                datasets:[{
+                    label:'sentiment',
+                    data:sentiment_values
+                },{
+                    label:'cos_sim(tf-idf)',
+                    backgroundColor: color(window.chartColors.red).rgbString(),
+                    data:tfidf_values
+                }]
+            },
+            options:{
+                title:{
+                    display:true,
+                    text:'sentiment value & cosine similarity by TF-IDF vector, bar plot! (takuro1221)'
+                }
+            }
+            });
+        </script>
+    </body>
+</html>
